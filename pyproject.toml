@@ -8,6 +8,8 @@ authors = [
 ]
 dependencies = [
     "django>=4.2.3",
+    "djangorestframework>=3.14.0",
+    "django-cors-headers>=4.2.0",
 ]
 requires-python = ">=3.11"
 license = {text = "MIT"}

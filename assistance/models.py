@@ -11,6 +11,10 @@ class Equipment(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = "Equipment"
+        verbose_name_plural = "Equipment"
 
 class Piece(models.Model):
     name = models.CharField(max_length=200)
@@ -21,6 +25,10 @@ class Piece(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = "Piece"
+        verbose_name_plural = "Pieces"
 
 class Product(models.Model):
     name = models.CharField(max_length=200)
@@ -31,3 +39,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = "Product"
+        verbose_name_plural = "Products"
