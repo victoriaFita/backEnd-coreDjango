@@ -1,0 +1,18 @@
+
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "Augusto Balsanelli", email = "augustebalsanel@proton.me"},
+]
+dependencies = [
+    "django>=4.2.3",
+]
+requires-python = ">=3.11"
+license = {text = "MIT"}
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "black>=23.7.0",
+]
