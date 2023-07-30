@@ -22,9 +22,9 @@ from rest_framework.routers import DefaultRouter
 from assistance.views import EquipmentViewSet, PieceViewSet, ProductViewSet
 
 router = DefaultRouter()
-router.register("Equipments", EquipmentViewSet)
-router.register("Pieces", PieceViewSet) 
-router.register("Products", ProductViewSet)
+router.register("equipments", EquipmentViewSet)
+router.register("pieces", PieceViewSet) 
+router.register("products", ProductViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
