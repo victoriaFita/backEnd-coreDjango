@@ -22,11 +22,13 @@ from user.router import router as user_router
 
 
 from assistance.views import EquipmentViewSet, PieceViewSet, ProductViewSet
+from user.views import UserViewSet
 
 router = DefaultRouter()
 router.register("equipments", EquipmentViewSet)
 router.register("pieces", PieceViewSet) 
 router.register("products", ProductViewSet)
+router.register("users", UserViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),

@@ -24,6 +24,6 @@ class User(AbstractUser):
         return self.email
 
     class Meta:
-        verbose_name = "Usuário"
-        verbose_name_plural = "Usuários"
+        verbose_name = "User"
+        verbose_name_plural = "Users"
         ordering = ["-date_joined"]
