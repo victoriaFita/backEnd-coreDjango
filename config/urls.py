@@ -22,7 +22,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from user.router import router as user_router
 
 
-from assistance.views import EquipmentViewSet, PieceViewSet, ProductViewSet, ServiceViewSet, AssistanceViewSet, CheckOutViewSet
+from assistance.views import EquipmentViewSet, PieceViewSet, ProductViewSet, AssistanceViewSet, CheckOutViewSet
 from user.views import UserViewSet, LoginView
 
 router = DefaultRouter()
@@ -30,7 +30,6 @@ router.register("equipments", EquipmentViewSet)
 router.register("pieces", PieceViewSet) 
 router.register("products", ProductViewSet)
 router.register("users", UserViewSet)
-router.register("services", ServiceViewSet)
 router.register("assistances", AssistanceViewSet)
 router.register("checkouts", CheckOutViewSet)
 
