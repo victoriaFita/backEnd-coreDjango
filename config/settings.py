@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 from datetime import timedelta
 
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     "corsheaders", 
     "user",
+    "uploader",
     "assistance",
     "django.contrib.staticfiles",
 ]
@@ -168,3 +170,8 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "API para gerenciamento da victoria. fit, incluindo endpoints e documentação.",
     "VERSION": "1.0.0",
 }
+
+MEDIA_URL = "http://localhost:8000/media/"
+MEDIA_ENDPOINT = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+FILE_UPLOAD_PERMISSIONS = 0o640
