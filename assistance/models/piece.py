@@ -1,5 +1,7 @@
 from django.db import models
 
+from uploader.models import Image
+
 from assistance.models import Equipment
 
 class Piece(models.Model):
@@ -7,7 +9,15 @@ class Piece(models.Model):
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     manufacture_date = models.DateField()
     last_maintenance_date = models.DateField()
-    status = models.CharField(max_length=200)  # Status of the part (e.g., "Working", "In Repair", etc.)
+    status = models.CharField(max_length=200) 
+    image =  models.ForeignKey(
+        Image,
+        related_name="+",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        default=None,
+    )
 
     def __str__(self):
         return self.name
