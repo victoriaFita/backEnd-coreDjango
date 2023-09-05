@@ -20,14 +20,7 @@ class Equipment(models.Model):
     location = models.CharField(max_length=200)  # remove it
     status = models.CharField(max_length=20, choices=STATUS_EQUIPMENT) # change it to condition
     description = models.CharField(max_length=200, blank=True, null=True) 
-    image =  models.ForeignKey(
-        Image,
-        related_name="+",
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-        default=None,
-    )
+    image = models.ImageField(upload_to=(''), null=True, blank=True)
 
     def __str__(self):
         return self.name
