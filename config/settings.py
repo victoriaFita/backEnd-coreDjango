@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "drf_spectacular",
     "rest_framework",
     'rest_framework_simplejwt',
     "corsheaders", 
@@ -157,3 +158,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOW_ALL_ORIGINS = True
 
 AUTH_USER_MODEL = "user.User"
+
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "victoria. fit API",
+    "DESCRIPTION": "API para gerenciamento da victoria. fit, incluindo endpoints e documentação.",
+    "VERSION": "1.0.0",
+}
