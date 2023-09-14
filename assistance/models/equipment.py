@@ -8,7 +8,8 @@ STATUS_EQUIPMENT = [
     ]
 
 TYPE_EQUIPMENT = [
-    ('athletic', "Athletic")
+    ('athletic', "Athletic"),
+    ('supergold', "SuperGold")
 ]
 
 class Equipment(models.Model):
