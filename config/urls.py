@@ -17,8 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from user.views import change_password
+
 from django.conf import settings
 from django.conf.urls.static import static
+
 
 from uploader.router import router as uploader_router
 
@@ -63,6 +66,7 @@ urlpatterns = [
         name="redoc",
     ),
     path("api/media/", include(uploader_router.urls)),
+    path('users/<int:user_id>/change_password/', change_password, name='change_password'),
 ]
 
 urlpatterns += static(settings.MEDIA_ENDPOINT, document_root=settings.MEDIA_ROOT)
