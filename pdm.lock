@@ -6,7 +6,7 @@ groups = ["default", "dev"]
 cross_platform = true
 static_urls = false
 lock_version = "4.3"
-content_hash = "sha256:70e75aec40d3a85f71a2012c07326b27c96f5ba414961ce4cf01431628fa1d82"
+content_hash = "sha256:ee8facaeb794e6e6aeb3fed4ebefc63689c53ae401631d1242665be90b7de743"
 
 [[package]]
 name = "asgiref"
@@ -205,6 +205,15 @@ dependencies = [
 files = [
     {file = "drf-spectacular-0.26.4.tar.gz", hash = "sha256:8f5a8f87353d1bb8dcb3f3909b7109b2dcbe1d91f3e069409cf322963e140bd6"},
     {file = "drf_spectacular-0.26.4-py3-none-any.whl", hash = "sha256:afeccc6533dcdb4e78afbfcc49f3c5e9c369aeb62f965e4d1a43b165449c147a"},
+]
+
+[[package]]
+name = "drf-writable-nested"
+version = "0.7.0"
+requires_python = ">=3.7"
+summary = "Writable nested helpers for django-rest-framework's serializers"
+files = [
+    {file = "drf_writable_nested-0.7.0-py3-none-any.whl", hash = "sha256:154c0381e8a3a477e0fd539d5e1caf8ff4c1097a9c0c0fe741d4858b11b0455b"},
 ]
 
 [[package]]
