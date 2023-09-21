@@ -1,7 +1,10 @@
+from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
+from uploader.serializers.image import ImageUploadSerializer, ImageSerializer
+
 from assistance.models import Equipment
-from uploader.serializers.image import ImageSerializer
+from uploader.models import Image  
 
 class EquipmentSerializer(ModelSerializer):
     image = ImageSerializer(required=False) 
@@ -10,20 +13,33 @@ class EquipmentSerializer(ModelSerializer):
         model = Equipment
         fields = "__all__"
 
-    def update(self, instance, validated_data):
-        # Atualizando campos normais
-        instance.name = validated_data.get('name', instance.name)
-        instance.model = validated_data.get('model', instance.model)
-        # ... (atualize os outros campos conforme necessário)
+    def create(self, validated_data):
+        image_data = validated_data.pop('image', None)
+        
+        if image_data:
+            image_serializer = ImageUploadSerializer(data=image_data)
+            if image_serializer.is_valid(raise_exception=True):
+                image = image_serializer.save()
+                validated_data['image'] = image
 
-        # Atualizando a imagem
+        equipment = Equipment.objects.create(**validated_data)
+        return equipment
+
+    def update(self, instance, validated_data):
         image_data = validated_data.pop('image', None)
         if image_data:
-            image_serializer = ImageSerializer(instance.image, data=image_data, partial=True)
-            if image_serializer.is_valid():
-                image_serializer.save()
+            # Se o Equipment já possui uma imagem, atualize-a
+            if instance.image:
+                image_serializer = ImageUploadSerializer(instance.image, data=image_data, partial=True)
+            # Senão, crie uma nova imagem
             else:
-                raise serializers.ValidationError(image_serializer.errors)
+                image_serializer = ImageUploadSerializer(data=image_data)
+            
+            if image_serializer.is_valid(raise_exception=True):
+                image = image_serializer.save()
+                validated_data['image'] = image
         
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
         instance.save()
         return instance

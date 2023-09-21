@@ -1,8 +1,8 @@
 from rest_framework.serializers import ModelSerializer
 
-from assistance.models import Piece
+from assistance.models import Item
 
-class PieceSerializer(ModelSerializer):
+class ItemSerializer(ModelSerializer):
     class Meta:
-        model = Piece
+        model = Item
         fields = "__all__"

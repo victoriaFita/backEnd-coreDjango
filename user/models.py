@@ -39,16 +39,19 @@ class User(AbstractUser):
     def save(self, *args, **kwargs):
         if self.cep:
             url = f"https://viacep.com.br/ws/{self.cep}/json/"
-            response = requests.get(url)
-            if response.status_code == 200:
+            try:
+                response = requests.get(url)
+                response.raise_for_status()  
                 data = response.json()
                 self.logradouro = data.get("logradouro")
                 self.complemento = data.get("complemento")
                 self.bairro = data.get("bairro")
                 self.localidade = data.get("localidade")
                 self.uf = data.get("uf")
+            except requests.RequestException as e:
+                print(f"Erro ao buscar informações do CEP: {e}")
         super().save(*args, **kwargs)
-        
+
 
     def __str__(self):
         return self.email
