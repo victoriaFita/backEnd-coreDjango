@@ -28,10 +28,8 @@ class EquipmentSerializer(ModelSerializer):
     def update(self, instance, validated_data):
         image_data = validated_data.pop('image', None)
         if image_data:
-            # Se o Equipment já possui uma imagem, atualize-a
             if instance.image:
                 image_serializer = ImageUploadSerializer(instance.image, data=image_data, partial=True)
-            # Senão, crie uma nova imagem
             else:
                 image_serializer = ImageUploadSerializer(data=image_data)
             
