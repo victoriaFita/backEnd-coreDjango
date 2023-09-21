@@ -16,9 +16,6 @@ class Equipment(models.Model):
     name = models.CharField(max_length=200) # remove it
     model = models.CharField(max_length=200, null=True, blank=True)
     brand = models.CharField(max_length=200, choices=TYPE_EQUIPMENT, default='athletic', null=True, blank=True) #
-    manufacture_date = models.DateField(null=True, blank=True) # remove it
-    last_maintenance_date = models.DateField(null=True, blank=True) # remove it
-    location = models.CharField(max_length=200, null=True, blank=True)  # remove it
     status = models.CharField(max_length=20, choices=STATUS_EQUIPMENT, null=True, blank=True) # change it to condition
     description = models.CharField(max_length=200, blank=True, null=True) 
     image = models.ForeignKey(
