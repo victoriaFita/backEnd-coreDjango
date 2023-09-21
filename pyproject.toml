@@ -7,7 +7,7 @@ authors = [
     {name = "Augusto Balsanelli", email = "augustebalsanel@proton.me"},
 ]
 dependencies = [
-    "django>=4.2.3",
+    "django>=4.2.5",
     "djangorestframework>=3.14.0",
     "django-cors-headers>=4.2.0",
     "setuptools>=68.0.0",
@@ -18,6 +18,8 @@ dependencies = [
     "Pillow>=10.0.0",
     "drf-writable-nested>=0.7.0",
     "python-dotenv>=1.0.0",
+    "gunicorn>=21.2.0",
+    "whitenoise[brotli]>=6.5.0",
 ]
 requires-python = ">=3.10"
 license = {text = "MIT"}
@@ -26,3 +28,7 @@ license = {text = "MIT"}
 dev = [
     "black>=23.7.0",
 ]
+
+[[tool.pdm.autoexport]]
+filename = "requirements.txt"
+without-hashes = "true"
