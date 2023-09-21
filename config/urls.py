@@ -35,7 +35,7 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,
 )
 
-from assistance.views import EquipmentViewSet, PieceViewSet, ProductViewSet, AssistanceViewSet, CheckOutViewSet
+from assistance.views import EquipmentViewSet, PieceViewSet, ProductViewSet, AssistanceViewSet
 from user.views import UserViewSet, LoginView
 
 router = DefaultRouter()
@@ -44,7 +44,6 @@ router.register("pieces", PieceViewSet)
 router.register("products", ProductViewSet)
 router.register("users", UserViewSet)
 router.register("assistances", AssistanceViewSet)
-router.register("checkouts", CheckOutViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
