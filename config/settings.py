@@ -10,22 +10,17 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from dotenv import load_dotenv
 import os
+from dotenv import load_dotenv
 from pathlib import Path
 from datetime import timedelta
 
 load_dotenv()
 
-print("SECRET_KEY:", os.getenv("SECRET_KEY"))
-print("DEBUG:", os.getenv("DEBUG"))
-print("ALLOWED_HOSTS:", os.getenv("ALLOWED_HOSTS"))
-print("MODE:", os.getenv("MODE"))
-
-MODE = os.getenv("MODE")
-BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG", "False")
+ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000", "http://localhost:8000", "https://*.fl0.io/"]
 
 # Application definition
 
