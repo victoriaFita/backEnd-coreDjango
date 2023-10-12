@@ -19,7 +19,8 @@ dependencies = [
     "drf-writable-nested>=0.7.0",
     "python-dotenv>=1.0.0",
     "gunicorn>=21.2.0",
-    "whitenoise[brotli]>=6.5.0",
+    "whitenoise[brotli]>=6.6.0",
+    "netifaces>=0.11.0",
 ]
 requires-python = ">=3.10"
 license = {text = "MIT"}
@@ -32,3 +33,7 @@ dev = [
 [[tool.pdm.autoexport]]
 filename = "requirements.txt"
 without-hashes = "true"
+
+[tool.pdm.scripts]
+pre_dev = "python ./scripts/set_my_ip.py"
+dev = "python manage.py runserver 0.0.0.0:19003"
