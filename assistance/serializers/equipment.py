@@ -4,10 +4,11 @@ from rest_framework.serializers import ModelSerializer
 from uploader.serializers.image import ImageUploadSerializer, ImageSerializer
 
 from assistance.models import Equipment
-from uploader.models import Image  
+from uploader.models import Image
+
 
 class EquipmentSerializer(ModelSerializer):
-    image = ImageSerializer(required=False, allow_null=True) 
+    image = ImageSerializer(required=False, allow_null=True)
 
     class Meta:
         model = Equipment
@@ -15,12 +16,10 @@ class EquipmentSerializer(ModelSerializer):
 
     def create(self, validated_data):
         image_data = validated_data.pop('image', None)
-        
+
         if image_data:
-            image_serializer = ImageUploadSerializer(data=image_data)
-            if image_serializer.is_valid(raise_exception=True):
-                image = image_serializer.save()
-                validated_data['image'] = image
+            image_instance = Image.objects.get(attachment_key=image_data)
+            validated_data['image'] = image_instance
 
         equipment = Equipment.objects.create(**validated_data)
         return equipment
@@ -28,16 +27,12 @@ class EquipmentSerializer(ModelSerializer):
     def update(self, instance, validated_data):
         image_data = validated_data.pop('image', None)
         if image_data:
-            if image_data.get('file'):  # Check if the image file is provided
-                if instance.image:
-                    image_serializer = ImageUploadSerializer(instance.image, data=image_data, partial=True)
-                else:
-                    image_serializer = ImageUploadSerializer(data=image_data)
-                
-                if image_serializer.is_valid(raise_exception=True):
-                    image = image_serializer.save()
-                    validated_data['image'] = image
-            
+            try:
+                image_instance = Image.objects.get(attachment_key=image_data)
+                validated_data['image'] = image_instance
+            except Image.DoesNotExist:
+                raise serializers.ValidationError({"image": "Image with provided attachment_key does not exist."})
+
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()

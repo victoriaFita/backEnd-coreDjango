@@ -1,5 +1,3 @@
-# serializers.py
-
 from rest_framework import serializers
 from assistance.models import Cart, CartItem
 
@@ -10,7 +8,6 @@ class CartItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = CartItem
         fields = ['id', 'cart', 'item', 'equipment', 'quantity', 'item_name', 'equipment_name']
-
 
 class CartSerializer(serializers.ModelSerializer):
     items = CartItemSerializer(many=True, read_only=True, source='cartitem_set')
