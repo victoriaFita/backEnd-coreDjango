@@ -198,6 +198,9 @@ if MODE == "PRODUCTION":
 
 if MODE in ["PRODUCTION", "MIGRATE"]:
     MEDIA_URL = '/media/'
+elif os.getenv("ENVIRONMENT") == "fl0":
+    MEDIA_URL = "https://victoriafit.2.sg-1.fl0.io/"
 else:
     MY_IP = os.getenv("MY_IP", "127.0.0.1")
     MEDIA_URL = f"http://{MY_IP}:19003/media/"
+
