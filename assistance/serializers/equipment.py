@@ -2,12 +2,18 @@ from rest_framework import serializers
 from assistance.models import Equipment
 from uploader.models import Image
 
+class CoverSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ['url', 'description', 'uploaded_on']
+
 class EquipmentSerializer(serializers.ModelSerializer):
+    cover = CoverSerializer(read_only=True)
     cover_attachment_key = serializers.UUIDField(write_only=True, required=False)
 
     class Meta:
         model = Equipment
-        fields = "__all__"  # Make sure to include 'cover_attachment_key' if you're listing fields explicitly
+        fields = '__all__'
 
     def create(self, validated_data):
         cover_attachment_key = validated_data.pop('cover_attachment_key', None)
@@ -23,12 +29,18 @@ class EquipmentSerializer(serializers.ModelSerializer):
         if cover_attachment_key:
             image = Image.objects.get(attachment_key=cover_attachment_key)
             instance.cover = image
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
         instance.save()
-        return instance
+        return super().update(instance, validated_data)
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation['cover'] = instance.cover.attachment_key if instance.cover else None
+        # Instead of just the attachment key, we now build a dictionary with more details
+        if instance.cover:
+            representation['cover'] = {
+                'url': instance.cover.url,
+                'description': instance.cover.description,
+                'uploaded_on': instance.cover.uploaded_on.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+            }
+        else:
+            representation['cover'] = None
         return representation
