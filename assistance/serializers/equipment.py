@@ -19,9 +19,12 @@ class EquipmentSerializer(serializers.ModelSerializer):
         cover_attachment_key = validated_data.pop('cover_attachment_key', None)
         equipment = Equipment.objects.create(**validated_data)
         if cover_attachment_key:
-            image = Image.objects.get(attachment_key=cover_attachment_key)
-            equipment.cover = image
-            equipment.save()
+            try:
+                image = Image.objects.get(attachment_key=cover_attachment_key)
+                equipment.cover = image
+            except Image.DoesNotExist:
+                raise serializers.ValidationError('Imagem não encontrada.')
+        equipment.save()
         return equipment
 
     def update(self, instance, validated_data):
