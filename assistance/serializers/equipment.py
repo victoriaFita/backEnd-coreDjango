@@ -1,36 +1,34 @@
 from rest_framework import serializers
-from rest_framework.serializers import ModelSerializer
-
-from uploader.serializers.image import ImageUploadSerializer, ImageSerializer
-
 from assistance.models import Equipment
 from uploader.models import Image
 
-
-class EquipmentSerializer(ModelSerializer):
-    image = ImageUploadSerializer(required=False, allow_null=True)
+class EquipmentSerializer(serializers.ModelSerializer):
+    cover_attachment_key = serializers.UUIDField(write_only=True, required=False)
 
     class Meta:
         model = Equipment
-        fields = "__all__"
+        fields = "__all__"  # Make sure to include 'cover_attachment_key' if you're listing fields explicitly
 
     def create(self, validated_data):
-        image_data = validated_data.pop('image', None)
+        cover_attachment_key = validated_data.pop('cover_attachment_key', None)
         equipment = Equipment.objects.create(**validated_data)
-        if image_data:
-            image_serializer = ImageUploadSerializer(data=image_data)
-            if image_serializer.is_valid(raise_exception=True):
-                equipment.image = image_serializer.save()
-        equipment.save()
+        if cover_attachment_key:
+            image = Image.objects.get(attachment_key=cover_attachment_key)
+            equipment.cover = image
+            equipment.save()
         return equipment
 
     def update(self, instance, validated_data):
-        image_data = validated_data.pop('image', None)
+        cover_attachment_key = validated_data.pop('cover_attachment_key', None)
+        if cover_attachment_key:
+            image = Image.objects.get(attachment_key=cover_attachment_key)
+            instance.cover = image
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
-        if image_data:
-            image_serializer = ImageUploadSerializer(instance.image, data=image_data)
-            if image_serializer.is_valid(raise_exception=True):
-                image_serializer.save()
         instance.save()
         return instance
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['cover'] = instance.cover.attachment_key if instance.cover else None
+        return representation

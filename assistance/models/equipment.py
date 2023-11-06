@@ -17,7 +17,7 @@ class Equipment(models.Model):
     name = models.CharField(max_length=200)
     model = models.CharField(max_length=200, null=True, blank=True)
     description = models.CharField(max_length=200, blank=True, null=True)
-    image = models.ForeignKey(
+    cover = models.ForeignKey(
         Image,
         related_name="+",
         on_delete=models.CASCADE,
