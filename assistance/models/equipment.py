@@ -12,12 +12,11 @@ TYPE_EQUIPMENT = [
     ('supergold', "SuperGold")
 ]
 
+
 class Equipment(models.Model):
-    name = models.CharField(max_length=200) # remove it
+    name = models.CharField(max_length=200)
     model = models.CharField(max_length=200, null=True, blank=True)
-    brand = models.CharField(max_length=200, choices=TYPE_EQUIPMENT, default='athletic', null=True, blank=True) #
-    status = models.CharField(max_length=20, choices=STATUS_EQUIPMENT, null=True, blank=True, default=None)
-    description = models.CharField(max_length=200, blank=True, null=True) 
+    description = models.CharField(max_length=200, blank=True, null=True)
     image = models.ForeignKey(
         Image,
         related_name="+",
@@ -27,10 +26,9 @@ class Equipment(models.Model):
         default=None,
     )
 
-
     def __str__(self):
         return self.name
-    
+
     class Meta:
         verbose_name = "Equipment"
         verbose_name_plural = "Equipments"
