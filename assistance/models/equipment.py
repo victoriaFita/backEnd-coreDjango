@@ -2,15 +2,7 @@ from django.db import models
 
 from uploader.models import Image
 
-STATUS_EQUIPMENT = [
-        ('new', 'Novo'),
-        ('semi-new', 'Semi-novo'),
-    ]
 
-TYPE_EQUIPMENT = [
-    ('athletic', "Athletic"),
-    ('supergold', "SuperGold")
-]
 
 
 class Equipment(models.Model):
