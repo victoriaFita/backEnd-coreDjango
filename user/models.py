@@ -10,7 +10,7 @@ from uploader.models import Image
 class User(AbstractUser):
     username = None
     email = models.EmailField(_("e-mail address"), unique=True)
-    image = models.ForeignKey(
+    cover = models.ForeignKey(
         Image,
         related_name="+",
         on_delete=models.CASCADE,
