@@ -2,9 +2,6 @@ from django.db import models
 
 from uploader.models import Image
 
-
-
-
 class Equipment(models.Model):
     name = models.CharField(max_length=200)
     model = models.CharField(max_length=200, null=True, blank=True)
@@ -17,6 +14,7 @@ class Equipment(models.Model):
         blank=True,
         default=None,
     )
+    is_on_promotion = models.BooleanField(default=False, verbose_name="Em Promoção")
 
     def __str__(self):
         return self.name
