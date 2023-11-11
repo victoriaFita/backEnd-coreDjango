@@ -188,6 +188,7 @@ SPECTACULAR_SETTINGS = {
 }
 
 MEDIA_URL = "http://192.168.140.116:19003/media/"
+MEDIA_URL = "https://victoriafit.2.sg-1.fl0.io/media/"
 MEDIA_ENDPOINT = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 FILE_UPLOAD_PERMISSIONS = 0o640
@@ -197,7 +198,7 @@ if MODE == "PRODUCTION":
     STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 if MODE in ["PRODUCTION", "MIGRATE"]:
-    MEDIA_URL = '/media/'
+    MEDIA_URL = 'https://victoriafit.2.sg-1.fl0.io/media/'
 elif os.getenv("ENVIRONMENT") == "fl0":
     MEDIA_URL = "https://victoriafit.2.sg-1.fl0.io/"
 else:

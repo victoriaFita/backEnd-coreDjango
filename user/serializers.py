@@ -1,20 +1,37 @@
-from rest_framework.serializers import ModelSerializer, SlugRelatedField
-
+from rest_framework import serializers
+from django.contrib.auth.hashers import make_password
 from .models import User
-from uploader.serializers.image import ImageSerializer
+from uploader.models import Image
+from uploader.serializers import ImageSerializer
 
-class UserSerializer(ModelSerializer):
-    image = ImageSerializer(required=False)
-    
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ['url', 'description', 'uploaded_on']
+
+
+class UserSerializer(serializers.ModelSerializer):
+    cover = ImageSerializer(read_only=True)
+
     class Meta:
         model = User
-        fields = "__all__"
+        fields = '__all__'
         extra_kwargs = {'password': {'write_only': True}}
 
+
     def create(self, validated_data):
-        password = validated_data.pop('password', None)
-        instance = super(UserSerializer, self).create(validated_data)
-        if password is not None:
-            instance.set_password(password)
-            instance.save()
-        return instance
+        user = User(
+            email=validated_data['email'],
+            first_name=validated_data.get('first_name', ''),
+            last_name=validated_data.get('last_name', ''),
+            cpf=validated_data.get('cpf', ''),
+            telefone=validated_data.get('telefone', ''),
+            data_nascimento=validated_data.get('data_nascimento', ''),
+            cep=validated_data.get('cep', ''),
+            is_staff=validated_data.get('is_staff', False),
+            is_active=validated_data.get('is_active', True),
+        )
+        user.password = make_password(validated_data['password'])
+        user.save()
+        return user
+
